@@ -1,3 +1,4 @@
+package com.github.betacoders;
 /**
  * Perfil de um jogador na plataforma.
  *

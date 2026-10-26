@@ -1,3 +1,5 @@
+package com.github.betacoders;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,5 +80,35 @@ public class JogadorDAOJdbc implements JogadorDAO {
                 rs.getDouble("gasto_mensal"),
                 rs.getDouble("taxa_vitoria"),
                 Perfil.valueOf(rs.getString("perfil")));
+    }
+
+    @Override
+    public void salvar(Jogador jogador) {
+        String sql = "INSERT INTO jogador (id, apelido, horas_semana, partidas_semana, gasto_mensal, taxa_vitoria, perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, jogador.getId());
+            stmt.setString(2, jogador.getApelido());
+            stmt.setDouble(3, jogador.getHorasSemana());
+            stmt.setInt(4, jogador.getPartidasSemana());
+            stmt.setDouble(5, jogador.getGastoMensal());
+            stmt.setDouble(6, jogador.getTaxaVitoria());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao salvar avaliacao", e);
+        }
+    
+    }
+
+    @Override
+    public void remover(int id) {
+        String sql = "DELETE FROM jogador WHERE id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao remover jogador", e);
+        }
     }
 }

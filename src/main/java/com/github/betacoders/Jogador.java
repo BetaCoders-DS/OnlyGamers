@@ -1,3 +1,4 @@
+package com.github.betacoders;
 import java.util.Objects;
 
 /**
