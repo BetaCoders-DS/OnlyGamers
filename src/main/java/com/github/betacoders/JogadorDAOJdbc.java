@@ -13,8 +13,7 @@ import java.util.Optional;
  */
 public class JogadorDAOJdbc implements JogadorDAO {
 
-    private static final String COLUNAS =
-            "id, apelido, horas_semana, partidas_semana, gasto_mensal, taxa_vitoria, perfil";
+    private static final String COLUNAS = "id, apelido, horas_semana, partidas_semana, gasto_mensal, taxa_vitoria, perfil";
 
     private final Connection conexao;
 
@@ -27,7 +26,7 @@ public class JogadorDAOJdbc implements JogadorDAO {
         String sql = "SELECT " + COLUNAS + " FROM jogador ORDER BY id";
         List<Jogador> jogadores = new ArrayList<>();
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 jogadores.add(montarJogador(rs));
             }
@@ -93,11 +92,12 @@ public class JogadorDAOJdbc implements JogadorDAO {
             stmt.setInt(4, jogador.getPartidasSemana());
             stmt.setDouble(5, jogador.getGastoMensal());
             stmt.setDouble(6, jogador.getTaxaVitoria());
+            stmt.setString(7, jogador.getPerfil().name());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar avaliacao", e);
         }
-    
+
     }
 
     @Override
