@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlite:onlygamers.db");
-    }
+  public static Connection conectar() throws SQLException {
+    return DriverManager.getConnection("jdbc:sqlite:onlygamers.db");
+  }
 }

@@ -12,36 +12,36 @@ import java.io.IOException;
 
 public class BancoDados {
 
-    public static void inicializar() throws SQLException, IOException {
-        try (Connection conexao = DriverManager.getConnection("jdbc:sqlite:onlygamers.db")) {
+  public static void inicializar() throws SQLException, IOException {
+    try (Connection conexao = DriverManager.getConnection("jdbc:sqlite:onlygamers.db")) {
 
-            boolean tabelaExiste = false;
+      boolean tabelaExiste = false;
 
-            try (Statement stmt = conexao.createStatement();
-                 ResultSet resultado = stmt.executeQuery(
-                     "SELECT name FROM sqlite_master WHERE type='table' AND name='jogador'")) {
+      try (Statement stmt = conexao.createStatement();
+          ResultSet resultado = stmt.executeQuery(
+              "SELECT name FROM sqlite_master WHERE type='table' AND name='jogador'")) {
 
-                tabelaExiste = resultado.next();
+        tabelaExiste = resultado.next();
+      }
+
+      if (!tabelaExiste) {
+        String sql = Files.readString(Path.of("jogadores.sql"));
+        String[] comandos = sql.split(";");
+
+        try (Statement stmt = conexao.createStatement()) {
+          for (String comando : comandos) {
+            comando = comando.replaceAll("(?m)--.*$", "").trim();
+
+            if (!comando.isEmpty()) {
+              stmt.executeUpdate(comando);
             }
-
-            if (!tabelaExiste) {
-                String sql = Files.readString(Path.of("jogadores.sql"));
-                String[] comandos = sql.split(";");
-
-                try (Statement stmt = conexao.createStatement()) {
-                    for (String comando : comandos) {
-                        comando = comando.replaceAll("(?m)--.*$", "").trim();
-
-                        if (!comando.isEmpty()) {
-                            stmt.executeUpdate(comando);
-                        }
-                    }
-                }
-
-                System.out.println("Banco criado e jogadores inseridos!");
-            } else {
-                System.out.println("A tabela jogador já existe.");
-            }
+          }
         }
+
+        System.out.println("Banco criado e jogadores inseridos!");
+      } else {
+        System.out.println("A tabela jogador já existe.");
+      }
     }
+  }
 }

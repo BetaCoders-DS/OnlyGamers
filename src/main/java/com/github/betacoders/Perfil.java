@@ -1,4 +1,5 @@
 package com.github.betacoders;
+
 /**
  * Perfil de um jogador na plataforma.
  *
@@ -6,17 +7,17 @@ package com.github.betacoders;
  * para conferir se os grupos encontrados pelo K-Means fazem sentido.
  */
 public enum Perfil {
-    CASUAL("Joga de vez em quando, por diversão"),
-    REGULAR("Joga com frequência, mas sem grande dedicação"),
-    RANQUEADO("Joga partidas ranqueadas e treina quase todo dia");
+  CASUAL("Joga de vez em quando, por diversão"),
+  REGULAR("Joga com frequência, mas sem grande dedicação"),
+  RANQUEADO("Joga partidas ranqueadas e treina quase todo dia");
 
-    private final String descricao;
+  private final String descricao;
 
-    Perfil(String descricao) {
-        this.descricao = descricao;
-    }
+  Perfil(String descricao) {
+    this.descricao = descricao;
+  }
 
-    public String getDescricao() {
-        return descricao;
-    }
+  public String getDescricao() {
+    return descricao;
+  }
 }
