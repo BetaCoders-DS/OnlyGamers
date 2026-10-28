@@ -14,14 +14,6 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>exec-maven-plugin</artifactId>
-      <version>3.6.4</version>
-      <configuration>
-        <mainClass>com.github.betacoders.App</mainClass>
-      </configuration>
-    </plugin>
   </properties>
 
   <dependencies>
@@ -31,5 +23,18 @@
       <version>3.46.1.0</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.4</version>
+        <configuration>
+          <mainClass>com.github.betacoders.Main</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
