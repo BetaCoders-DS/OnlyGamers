@@ -1,13 +1,12 @@
-
 package com.github.betacoders;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.io.IOException;
 
 public class BancoDados {
   public static final String PLAYERS_TABLE = "jogador";
@@ -15,39 +14,44 @@ public class BancoDados {
 
   public static void inicializar() throws SQLException, IOException {
     try (Connection conexao = Conexao.conectar()) {
-
-      boolean tabelaExiste = false;
-
-      try (
-          Statement stmt = conexao.createStatement();
-          ResultSet resultado = stmt.executeQuery(
-              String.format("SELECT name FROM sqlite_master WHERE type='table' AND name='%s'",
-                  PLAYERS_TABLE))) {
-
-        tabelaExiste = resultado.next();
-      }
-
-      if (tabelaExiste) {
+      if (tabelaExiste(conexao, PLAYERS_TABLE)) {
         System.out.println("A tabela jogador já existe.");
         return;
       }
 
-      String sql = Files.readString(Path.of(PLAYERS_SQL_FILE));
-      sql = sql.replaceAll("(?m)--.*$", "");
-      String[] comandos = sql.split(";");
-
-      try (Statement stmt = conexao.createStatement()) {
-        for (String comando : comandos) {
-          comando = comando.trim();
-
-          if (comando.isEmpty())
-            continue;
-
-          stmt.executeUpdate(comando);
-        }
-      }
-
+      executarScriptSql(conexao);
       System.out.println("Banco criado e jogadores inseridos!");
     }
+  }
+
+  private static boolean tabelaExiste(Connection conexao, String table) throws SQLException {
+    String sql = String.format(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'",
+        table);
+
+    try (Statement stmt = conexao.createStatement();
+        ResultSet resultado = stmt.executeQuery(sql)) {
+      return resultado.next();
+    }
+  }
+
+  private static void executarScriptSql(Connection conexao) throws IOException, SQLException {
+    String sql = lerSqlSemComentarios(PLAYERS_SQL_FILE);
+    String[] comandos = sql.split(";");
+
+    try (Statement stmt = conexao.createStatement()) {
+      for (String comando : comandos) {
+        String cmd = comando.trim();
+        if (cmd.isEmpty()) {
+          continue;
+        }
+        stmt.executeUpdate(cmd);
+      }
+    }
+  }
+
+  private static String lerSqlSemComentarios(String arquivo) throws IOException {
+    String sql = Files.readString(Path.of(arquivo));
+    return sql.replaceAll("(?m)--.*$", "");
   }
 }
