@@ -3,7 +3,7 @@
 -- Cada comando termina em ';' e ocupa uma única linha.
 
 DROP TABLE IF EXISTS jogador;
-CREATE TABLE jogador (id INTEGER AUTO_INCREMENT PRIMARY KEY, apelido VARCHAR(32) NOT NULL, horas_semana DOUBLE PRECISION NOT NULL, partidas_semana INT NOT NULL, gasto_mensal DOUBLE PRECISION NOT NULL, taxa_vitoria DOUBLE PRECISION NOT NULL, perfil VARCHAR(16) NOT NULL);
+CREATE TABLE jogador (id INTEGER PRIMARY KEY, apelido VARCHAR(32) NOT NULL, horas_semana DOUBLE PRECISION NOT NULL, partidas_semana INT NOT NULL, gasto_mensal DOUBLE PRECISION NOT NULL, taxa_vitoria DOUBLE PRECISION NOT NULL, perfil VARCHAR(16) NOT NULL);
 
 INSERT INTO jogador (apelido, horas_semana, partidas_semana, gasto_mensal, taxa_vitoria, perfil) VALUES ('TurboPirate12', 11.3, 36, 18.7, 65.4, 'REGULAR');
 INSERT INTO jogador (apelido, horas_semana, partidas_semana, gasto_mensal, taxa_vitoria, perfil) VALUES ('CrimsonTank33', 35.2, 62, 205.75, 58.7, 'RANQUEADO');
