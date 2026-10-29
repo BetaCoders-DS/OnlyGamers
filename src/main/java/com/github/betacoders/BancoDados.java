@@ -33,11 +33,12 @@ public class BancoDados {
       }
 
       String sql = Files.readString(Path.of(PLAYERS_SQL_FILE));
+      sql = sql.replaceAll("(?m)--.*$", "");
       String[] comandos = sql.split(";");
 
       try (Statement stmt = conexao.createStatement()) {
         for (String comando : comandos) {
-          comando = comando.replaceAll("(?m)--.*$", "").trim();
+          comando = comando.trim();
 
           if (comando.isEmpty())
             continue;
