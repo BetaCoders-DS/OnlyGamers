@@ -31,7 +31,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.6.4</version>
         <configuration>
-          <mainClass>com.github.betacoders.Main</mainClass>
+          <mainClass>com.github.betacoders.App</mainClass>
         </configuration>
       </plugin>
     </plugins>
