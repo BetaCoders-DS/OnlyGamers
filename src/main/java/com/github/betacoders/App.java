@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Main {
+public class App {
   public static void main(String[] args) {
     try {
       BancoDados.inicializar();
